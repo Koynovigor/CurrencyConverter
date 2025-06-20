@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.l3on1kl.currencyconverter"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.l3on1kl.currencyconverter"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -34,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -58,11 +58,16 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.adaptive)
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.material.icons.extended)
+
 //    testImplementation(libs.junit)
 //    testImplementation(libs.testng)
 //    testImplementation(libs.junit.junit)
@@ -86,12 +91,12 @@ dependencies {
 
     // room
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
     // hilt
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
     // navigation
@@ -115,4 +120,7 @@ dependencies {
     testImplementation(libs.junit.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.testng)
+
+    // flags
+    implementation(libs.flagkit.android)
 }

@@ -33,4 +33,11 @@
     <string name="currency_try">Турецкая Лира</string>
     <string name="currency_usd">Американский Доллар</string>
     <string name="currency_zar">Южноафриканский Ранд</string>
+    <string name="profile">Профиль</string>
+    <string name="back">Назад</string>
+    <string name="choose_currency">Выберите валюту</string>
+    <string name="action_select">Выбрать</string>
+    <string name="toggle_balance">Скрыть или показать баланс</string>
+    <string name="balance">Баланс</string>
+    <string name="assets">Активы</string>
 </resources>

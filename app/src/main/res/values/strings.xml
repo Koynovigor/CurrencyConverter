@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">CurrencyConverter</string>
+    <string name="app_name" translatable="false">Currency Converter</string>
 
     <string name="symbol_eur" translatable="false">€</string>
     <string name="symbol_aud" translatable="false">$</string>
@@ -102,4 +102,11 @@
     <string name="currency_try">Turkish Lira</string>
     <string name="currency_usd">USA Dollar</string>
     <string name="currency_zar">South Africa Rand</string>
+    <string name="profile">Profile</string>
+    <string name="back">Back</string>
+    <string name="choose_currency">Choose currency</string>
+    <string name="action_select">Action select</string>
+    <string name="toggle_balance">Hide or show the balance</string>
+    <string name="balance">Balance</string>
+    <string name="assets">Assets</string>
 </resources>
