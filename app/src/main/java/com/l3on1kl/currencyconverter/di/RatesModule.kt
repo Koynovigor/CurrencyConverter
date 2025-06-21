@@ -2,8 +2,8 @@ package com.l3on1kl.currencyconverter.di
 
 import com.l3on1kl.currencyconverter.data.dataSource.remote.RatesService
 import com.l3on1kl.currencyconverter.data.dataSource.remote.RemoteRatesServiceImpl
-import com.l3on1kl.currencyconverter.data.repository.RatesRepository
 import com.l3on1kl.currencyconverter.data.repository.RatesRepositoryImpl
+import com.l3on1kl.currencyconverter.domain.repository.RatesRepository
 import com.l3on1kl.currencyconverter.domain.usecase.GetRatesFlowUseCase
 import dagger.Module
 import dagger.Provides

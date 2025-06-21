@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.l3on1kl.currencyconverter.data.dataSource.room.ConverterDatabase
 import com.l3on1kl.currencyconverter.data.dataSource.room.account.dao.AccountDao
 import com.l3on1kl.currencyconverter.data.dataSource.room.account.dbo.AccountDbo
+import com.l3on1kl.currencyconverter.data.dataSource.room.transaction.dao.TransactionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,4 +42,8 @@ object DatabaseModule {
     @Provides
     fun provideAccountDao(db: ConverterDatabase): AccountDao =
         db.accountDao()
+
+    @Provides
+    fun provideTransactionDao(db: ConverterDatabase): TransactionDao =
+        db.transactionDao()
 }

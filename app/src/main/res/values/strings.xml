@@ -102,6 +102,7 @@
     <string name="currency_try">Turkish Lira</string>
     <string name="currency_usd">USA Dollar</string>
     <string name="currency_zar">South Africa Rand</string>
+
     <string name="profile">Profile</string>
     <string name="back">Back</string>
     <string name="choose_currency">Choose currency</string>
@@ -109,4 +110,8 @@
     <string name="toggle_balance">Hide or show the balance</string>
     <string name="balance">Balance</string>
     <string name="assets">Assets</string>
+    <string name="history">Transaction history</string>
+    <string name="exchange">Exchange</string>
+    <string name="currency">Currency</string>
+
 </resources>

@@ -40,4 +40,7 @@
     <string name="toggle_balance">Скрыть или показать баланс</string>
     <string name="balance">Баланс</string>
     <string name="assets">Активы</string>
+    <string name="history">История транзакций</string>
+    <string name="exchange">Обмен</string>
+    <string name="currency">Курс</string>
 </resources>

@@ -41,6 +41,4 @@ class CurrencyPrefsRepository @Inject constructor(
     fun loadBalanceVisible(): Boolean {
         return prefs.getBoolean(BALANCE_VISIBLE_KEY, true)
     }
-
-
 }

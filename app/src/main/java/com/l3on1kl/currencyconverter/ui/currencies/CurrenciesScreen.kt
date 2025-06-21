@@ -7,11 +7,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +34,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +48,7 @@ import com.l3on1kl.currencyconverter.ui.animation.Animations
 import com.l3on1kl.currencyconverter.ui.animation.smoothScrollToTop
 import com.l3on1kl.currencyconverter.ui.currencies.components.CurrenciesTopAppBar
 import com.l3on1kl.currencyconverter.ui.currencies.components.CurrencyRow
+import com.l3on1kl.currencyconverter.ui.currencies.components.formatAmount
 import com.l3on1kl.currencyconverter.ui.currencies.components.getCurrencyName
 import com.l3on1kl.currencyconverter.ui.currencies.components.getCurrencySymbol
 import com.l3on1kl.currencyconverter.ui.currency_picker.CurrencyPickerSheet
@@ -74,12 +80,27 @@ fun CurrenciesScreen(
     var sheetVisible by rememberSaveable { mutableStateOf(false) }
     val balance by viewModel.balance.collectAsState()
     val balanceVisible by viewModel.balanceVisible.collectAsState()
+    val amountText by viewModel.amountText.collectAsState()
+
+    val accounts by viewModel.accounts.collectAsState(initial = emptyList())
+
+    val focusManager = LocalFocusManager.current
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundApp)
-            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .windowInsetsPadding(
+                WindowInsets.safeDrawing.only(
+                    WindowInsetsSides.Top + WindowInsetsSides.Left + WindowInsetsSides.Right
+                )
+            )
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                    viewModel.validateOrResetAmount()
+                })
+            }
     ) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -118,6 +139,8 @@ fun CurrenciesScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(sortedRates, key = { it.code }) { rate ->
+                    val accountAmount = accounts.firstOrNull { it.code == rate.code }?.amount
+
                     AnimatedVisibility(
                         visible = true,
                         enter = fadeIn() + expandVertically(),
@@ -135,9 +158,26 @@ fun CurrenciesScreen(
                                 symbol = getCurrencySymbol(rate.code),
                                 amount = rate.amount
                             ),
-                            selected = rate.code == baseCode,
+                            isSelected = rate.code == baseCode,
+                            amountText = if (rate.code == baseCode) {
+                                amountText
+                            } else {
+                                formatAmount(rate.amount)
+                            },
+                            isUserAmount = viewModel.isUserAmount.collectAsState().value,
+                            onAmountChange = viewModel::onAmountChange,
+                            accountAmount = accountAmount,
+                            onClear = viewModel::clearAmount,
                             onClick = {
-                                viewModel.select(rate.code)
+                                if (viewModel.isUserAmount.value) navController
+                                    .navigate(
+                                        Destinations.Exchange(
+                                            toCode = baseCode,
+                                            fromCode = rate.code,
+                                            amount = viewModel.amount.value
+                                        )
+                                    )
+                                else viewModel.select(rate.code)
                             }
                         )
                     }
