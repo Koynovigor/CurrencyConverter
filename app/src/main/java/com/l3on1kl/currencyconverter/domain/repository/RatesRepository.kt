@@ -1,4 +1,4 @@
-package com.l3on1kl.currencyconverter.data.repository
+package com.l3on1kl.currencyconverter.domain.repository
 
 import com.l3on1kl.currencyconverter.domain.model.Rate
 import kotlinx.coroutines.flow.Flow

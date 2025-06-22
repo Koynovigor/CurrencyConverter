@@ -30,3 +30,9 @@ fun formatAmount(value: Double, maxFractionDigits: Int = 6): String {
     }
     return format.format(value)
 }
+
+private val validAmountRegex = Regex("^\\d+(\\.\\d+)?$")
+fun isAmountValid(text: String): Boolean {
+    val normalized = text.replace(',', '.')
+    return validAmountRegex.matches(normalized)
+}

@@ -2,6 +2,7 @@ package com.l3on1kl.currencyconverter.data.repository
 
 import com.l3on1kl.currencyconverter.data.dataSource.remote.RatesService
 import com.l3on1kl.currencyconverter.domain.model.Rate
+import com.l3on1kl.currencyconverter.domain.repository.RatesRepository
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

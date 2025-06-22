@@ -17,14 +17,17 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -38,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -52,6 +54,7 @@ import com.l3on1kl.currencyconverter.ui.currencies.components.getCurrencyName
 import com.l3on1kl.currencyconverter.ui.currencies.components.getCurrencySymbol
 import com.l3on1kl.currencyconverter.ui.currency_picker.CurrencyPickerSheet
 import com.l3on1kl.currencyconverter.ui.theme.BackgroundApp
+import com.l3on1kl.currencyconverter.ui.theme.BorderCard
 import com.l3on1kl.currencyconverter.ui.theme.OnBackgroundApp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,12 +89,10 @@ fun ProfileScreen(
 
         Scaffold(
             topBar = {
-                TopAppBar(
+                CenterAlignedTopAppBar(
                     title = {
                         Text(
-                            text = stringResource(R.string.profile),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
+                            text = stringResource(R.string.profile)
                         )
                     },
                     navigationIcon = {
@@ -99,7 +100,20 @@ fun ProfileScreen(
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = stringResource(R.string.back),
-                                tint = OnBackgroundApp
+                                tint = BorderCard
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                navController.navigate(Destinations.Transactions)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.History,
+                                contentDescription = stringResource(R.string.history),
+                                tint = BorderCard
                             )
                         }
                     },
@@ -124,41 +138,59 @@ fun ProfileScreen(
                 ),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                if (balanceVisible) {
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Transparent),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = stringResource(R.string.balance) + ":",
-                                color = OnBackgroundApp,
-                                style = MaterialTheme.typography.titleLarge
-                            )
 
-                            AssistChip(
-                                onClick = { sheetVisible = true },
-                                label = {
-                                    Text(
-                                        text = "${formatAmount(balance, 2)} ${currency.name}",
-                                        color = OnBackgroundApp,
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                },
-                                leadingIcon = {
-                                    Text(
-                                        getCurrencySymbol(currency.name),
-                                        color = OnBackgroundApp,
-                                        style = MaterialTheme.typography.titleLarge
-                                    )
-                                },
-                            )
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.Transparent),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.balance) + ":",
+                            color = OnBackgroundApp,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            if (balanceVisible) {
+                                AssistChip(
+                                    onClick = { sheetVisible = true },
+                                    label = {
+                                        Text(
+                                            text = "${formatAmount(balance, 2)} ${currency.name}",
+                                            color = OnBackgroundApp,
+                                            style = MaterialTheme.typography.titleMedium
+                                        )
+                                    },
+                                    leadingIcon = {
+                                        Text(
+                                            getCurrencySymbol(currency.name),
+                                            color = OnBackgroundApp,
+                                            style = MaterialTheme.typography.titleLarge
+                                        )
+                                    },
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    currencyViewModel.toggleBalanceVisible()
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = if (balanceVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                                    contentDescription = stringResource(R.string.toggle_balance),
+                                    tint = BorderCard
+                                )
+                            }
                         }
                     }
                 }
+
 
                 item {
                     Spacer(
@@ -179,6 +211,7 @@ fun ProfileScreen(
                             symbol = getCurrencySymbol(acc.code),
                             amount = acc.amount
                         ),
+                        amountText = formatAmount(acc.amount),
                         onClick = { },
                         clickEnabled = false
                     )

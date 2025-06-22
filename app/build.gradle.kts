@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
-    id("kotlin-kapt")
     id("androidx.room")
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
@@ -16,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.l3on1kl.currencyconverter"
-        minSdk = 26
+        minSdk = 28
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"

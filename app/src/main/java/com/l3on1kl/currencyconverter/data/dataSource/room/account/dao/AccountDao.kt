@@ -17,4 +17,10 @@ interface AccountDao {
 
     @Query("SELECT * FROM accounts")
     fun getAllAsFlow(): Flow<List<AccountDbo>>
+
+    @Query("UPDATE accounts SET amount = amount + :delta WHERE currency_code = :code")
+    suspend fun updateBalance(code: String, delta: Double)
+
+    @Query("SELECT * FROM accounts WHERE currency_code = :code LIMIT 1")
+    suspend fun getByCode(code: String): AccountDbo?
 }
