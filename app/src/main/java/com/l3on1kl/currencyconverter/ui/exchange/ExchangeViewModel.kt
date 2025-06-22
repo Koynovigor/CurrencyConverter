@@ -43,6 +43,8 @@ class ExchangeViewModel @Inject constructor(
     }
 
     fun buy() = viewModelScope.launch {
-        _uiState.value?.let { makeExchange(it) }
+        val exchange = _uiState.value
+        if (exchange == null || exchange.toAmount <= 0.0 || exchange.fromAmount <= 0.0) return@launch
+        makeExchange(exchange)
     }
 }
