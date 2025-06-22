@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
@@ -141,9 +143,10 @@ fun CurrencyRow(
                     horizontalAlignment = Alignment.End
                 ) {
 
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
                     ) {
                         InlineEditableText(
                             text = amountText,
@@ -163,8 +166,11 @@ fun CurrencyRow(
                             textColor = OnBackgroundApp,
                             visualTransformation = SuffixTransformation(" ${rate.symbol}"),
                             modifier = Modifier
-                                .alignByBaseline()
+                                .align(Alignment.CenterEnd)
                                 .focusRequester(focusRequester)
+                                .padding(
+                                    end = if (isSelected && isUserAmount) 36.dp else 0.dp
+                                )
                                 .onFocusChanged { focusState.value = it.isFocused }
                         )
 
@@ -179,7 +185,7 @@ fun CurrencyRow(
                                 },
                                 modifier = Modifier
                                     .size(24.dp)
-                                    .alignByBaseline(),
+                                    .align(Alignment.CenterEnd),
                                 colors = IconButtonDefaults.iconButtonColors(
                                     containerColor = Color.Transparent,
                                     contentColor = BorderCard
