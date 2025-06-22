@@ -104,3 +104,23 @@
 - Поддержка Edge-to-edge
 
 ---
+
+## Тестирование
+
+Проект покрыт юнит-тестами ключевой бизнес-логики и репозиториев.  
+Покрываются следующие use case'ы:
+
+- `EnsureInitialCurrencyExistsUseCaseTest`
+- `FilterPurchasableCurrenciesUseCaseTest`
+- `GetBalanceUseCaseTest`
+- `GetRatesFlowUseCaseTest`
+- `MakeExchangeUseCaseTest`
+- `ObserveAccountsUseCaseTest`
+
+А также реализация репозиториев:
+
+- `AccountRepositoryImplTest`
+- `RatesRepositoryImplTest`
+- `TransactionRepositoryImplTest`
+
+---
